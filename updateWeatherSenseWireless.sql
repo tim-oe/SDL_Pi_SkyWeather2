@@ -7,7 +7,6 @@ alter table Generic change column `TimeStamp` `TimeStamp` timestamp NOT NULL DEF
 alter table IndoorTHSensors change column `TimeStamp` `TimeStamp` timestamp NOT NULL DEFAULT current_timestamp();
 alter table SolarMax433MHZ change column `TimeStamp` `TimeStamp` timestamp NOT NULL DEFAULT current_timestamp();
 alter table TB433MHZ change column `TimeStamp` `TimeStamp` timestamp NOT NULL DEFAULT current_timestamp();
-alter table WeatherData change column `TimeStamp` `TimeStamp` timestamp NOT NULL DEFAULT current_timestamp();
 
 -- version 4.9.1
 -- https://www.phpmyadmin.net/

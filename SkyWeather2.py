@@ -137,12 +137,7 @@ if (config.enable_MySQL_Logging):
     # update weather table 27.2 update
     try:
 
-        con = mdb.connect(
-          "localhost",
-          "root",
-          config.MySQL_Password,
-          "SkyWeather2"
-          )
+        con = util.getSkyWeatherConnection()      
         cur = con.cursor()
         query = "SELECT SerialNumber FROM WeatherData"
         cur.execute(query)
@@ -158,12 +153,7 @@ if (config.enable_MySQL_Logging):
     # update weather table 27.3 update
     try:
 
-        con = mdb.connect(
-          "localhost",
-          "root",
-          config.MySQL_Password,
-          "SkyWeather2"
-          )
+        con = util.getSkyWeatherConnection()      
         cur = con.cursor()
         query = "SELECT RSSI FROM WeatherData"
         cur.execute(query)
@@ -204,7 +194,6 @@ except:
 cmd = [ '/usr/bin/pigpiod' ]
 output = subprocess.check_output(cmd, stderr=subprocess.STDOUT)
 print(output)
-import DustSensor
 
 # detect devices
 
@@ -213,6 +202,7 @@ import DustSensor
 ################
 
 try:
+        import DustSensor
 
         DustSensor.powerOnDustSensor()
         time.sleep(3)
