@@ -169,10 +169,13 @@ def getWSAQIs():
         # commit
         # close
         try:
-            con = util.getWeatherSenseConnection()      
+            #con = util.getWeatherSenseConnection()
+            con = util.getSkyWeatherConnection()      
+      
             cur = con.cursor()
+            #query = "SELECT timestamp, AQI, AQI24Hour FROM AQI433MHZ ORDER BY timestamp DESC LIMIT 1;"
 
-            query = "SELECT timestamp, AQI, AQI24Hour FROM AQI433MHZ ORDER BY timestamp DESC LIMIT 1;"
+            query = "SELECT TimeStamp, AQI, AQI24Average from WeatherData ORDER BY TimeStamp DESC LIMIT 1;"
             cur.execute(query)
             
             myAQIRecords = cur.fetchall()
