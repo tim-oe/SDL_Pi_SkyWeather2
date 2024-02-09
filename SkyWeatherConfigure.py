@@ -453,7 +453,7 @@ class SkyWeatherConfigure(App):
         json_data = json.dumps(data)        
         
         with open('SkyWeather2.JSON', 'w') as outfile:
-            json.dump(data, outfile)
+            json.dump(data, outfile, indent=2)
 
     # screen builds
 
