@@ -159,7 +159,8 @@ def WUnits():
 
 
 
-def getWSAQIs():
+# this populates the main indicators, graph is handle belop
+def getAQI():
     
     #read AQI from WeatherSense
 
@@ -169,13 +170,15 @@ def getWSAQIs():
         # commit
         # close
         try:
-            #con = util.getWeatherSenseConnection()
-            con = util.getSkyWeatherConnection()      
+                
+            if(config.USEWSAQI):
+                con = util.getWeatherSenseConnection()
+                query = "SELECT timestamp, AQI, AQI24Hour FROM AQI433MHZ ORDER BY timestamp DESC LIMIT 1;"
+            else:
+                con = util.getSkyWeatherConnection()      
+                query = "SELECT TimeStamp, AQI, AQI24Average from WeatherData ORDER BY TimeStamp DESC LIMIT 1;"
       
             cur = con.cursor()
-            #query = "SELECT timestamp, AQI, AQI24Hour FROM AQI433MHZ ORDER BY timestamp DESC LIMIT 1;"
-
-            query = "SELECT TimeStamp, AQI, AQI24Average from WeatherData ORDER BY TimeStamp DESC LIMIT 1;"
             cur.execute(query)
             
             myAQIRecords = cur.fetchall()
@@ -386,12 +389,9 @@ def generateCurrentWeatherJSON():
                 CWJSON["AQI24AverageUnits"] = ""
                 CWJSON["WindDirectionUnits"] = "deg"
                 
-                # adjust for WS AQI
-                if(config.USEWSAQI):
-                    myAQI = getWSAQIs()
-                    CWJSON["AQI24Average"] = myAQI[1] 
-                    CWJSON["AQI"] = myAQI[0]
-
+                myAQI = getAQI()
+                CWJSON["AQI24Average"] = myAQI[1] 
+                CWJSON["AQI"] = myAQI[0]
 
         except: 
                 traceback.print_exc()
